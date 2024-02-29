@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-02-29 14:42:22                                       *
+* @lastModifiedTime: 2024-02-29 14:43:24                                       *
 *******************************************************************************/
 
 #include "scop.hpp"
@@ -79,7 +79,7 @@ void keypress( GLFWwindow* window, int key, int scancode, int action, int mods )
 
 }
 
-int main(int argc, char** argv) {
+int main() {
     AF_init(WINDOW_HEIGHT, WINDOW_WIDTH, "Scop Gtouzali", &create_scene, &display, &keypress);
     AF_destroy();
 }

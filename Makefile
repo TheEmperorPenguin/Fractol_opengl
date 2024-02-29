@@ -1,4 +1,4 @@
-NAME		=	Fractol
+NAME		=	scop
 
 IMGUI_DIR	=	./includes/imgui
 INCLUDES	=	./includes
@@ -7,7 +7,6 @@ GLAD		=	./includes/include/glad
 SRC_DIR		=	./srcs
 SRC			=	main.cpp							\
 				ArcticFeather/ArcticFeather.cpp		\
-				ObjLoader.cpp						\
 				ArcticFeather/Shader.cpp			\
 
 OBJ			=	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(SRC))))
