@@ -63,9 +63,7 @@ fclean: clean
 re: fclean all
 
 run: all
-	@printf "Arguments: "
-	@read ARGS; \
-	./$(NAME) $$ARGS
+	./$(NAME)
 
 commit:
 	@make fclean --no-print-directory
