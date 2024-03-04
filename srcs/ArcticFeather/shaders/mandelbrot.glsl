@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-02-29 14:37:09                                       *
+* @lastModifiedTime: 2024-03-04 17:30:29                                       *
 *******************************************************************************/
 
 #version 330 core
@@ -75,7 +75,7 @@ float de(vec3 pos){
     return (length(max(abs(p.xyz)-vec3(0.1,5.0,0.1),vec3(0.0)))-0.05)/p.w;
   }
 
-#define AA 4
+#define AA 8
 
 void main()
 {

@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-02-29 14:26:52                                       *
+* @lastModifiedTime: 2024-03-04 18:45:18                                       *
 *******************************************************************************/
 
 #include "ArcticFeather.hpp"
@@ -87,7 +87,7 @@ int AF_init(int             window_width,
     glfwMakeContextCurrent(window);
     gladLoadGL(); 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSwapInterval(0); //vsync if 1
+    glfwSwapInterval(1); //vsync if 1
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;

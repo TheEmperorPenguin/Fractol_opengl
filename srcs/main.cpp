@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-02-29 14:43:24                                       *
+* @lastModifiedTime: 2024-03-04 17:30:54                                       *
 *******************************************************************************/
 
 #include "scop.hpp"
@@ -48,7 +48,7 @@ void display(GLFWwindow* window)
 
 void create_scene()
 {        
-    ourShader = new Shader("srcs/ArcticFeather/shaders/vertex.glsl", "srcs/ArcticFeather/shaders/mandelbrot.glsl");
+    ourShader = new Shader("srcs/ArcticFeather/shaders/vertex.glsl", "srcs/ArcticFeather/shaders/fractal.glsl");
     (*ourShader).use();
     
     float vertic1[] = {
