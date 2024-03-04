@@ -13,7 +13,6 @@
 unsigned int    triangle1;
 unsigned int    triangle2;
 Shader * ourShader;
-float offset = 0.0f;
 float x_pos = 0.0f;
 float y_pos = 0.0f;
 float zoom = 1.0f;
@@ -38,8 +37,7 @@ void display(GLFWwindow* window)
     if (glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS)
         zoom += 0.01f * zoom;
 
-    offset += 0.001;
-    (*ourShader).setFloat("time", sin(offset));
+    (*ourShader).setFloat("time", glfwGetTime());
     (*ourShader).setFloat("x_pos", x_pos);
     (*ourShader).setFloat("y_pos", y_pos);
     if(zoom < 0.00001f)

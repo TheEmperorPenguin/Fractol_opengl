@@ -87,7 +87,7 @@ int AF_init(int             window_width,
     glfwMakeContextCurrent(window);
     gladLoadGL(); 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSwapInterval(1); //vsync if 1
+    glfwSwapInterval(0); //vsync if 1
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
