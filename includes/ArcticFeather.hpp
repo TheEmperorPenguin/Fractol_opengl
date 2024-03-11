@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-02-29 14:06:54                                       *
+* @lastModifiedTime: 2024-03-11 16:11:59                                       *
 *******************************************************************************/
 
 #ifndef ARCTICFEATHER_HPP
@@ -21,9 +21,7 @@
         #define	GL_SILENCE_DEPRECATION
         # define __gl_h_
         # define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
-        #include <GLFW/glfw3.h>
-        #include <OpenGL/gl3.h>
-        #include <OpenGL/gl3ext.h>  
+        #include <GLFW/glfw3.h> 
     #else
         #include <math.h>
 

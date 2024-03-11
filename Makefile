@@ -43,7 +43,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) glad.o $(LIBS)
 
 glad.o: $(INCLUDES)/src/glad.c
-	clang -I$(INCLUDES)/include $(INCLUDES)/src/glad.c -c -o glad.o 
+	clang -I$(INCLUDES)/include $(INCLUDES)/src/glad.c -c -o obj/glad.o 
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(CC) -c $(CFLAGS) -o $@ $<
