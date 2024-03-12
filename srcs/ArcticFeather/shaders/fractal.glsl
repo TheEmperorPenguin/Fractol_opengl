@@ -17,9 +17,6 @@ uniform float x_pos;
 uniform float y_pos;
 uniform float zoom;
 uniform vec2  resolution;
-const float borderThickness = 0.01;
-const vec4 borderColor = vec4(1.0, 1.0, 0.0, 1.0);
-const vec4 fillColor = vec4(1.0, 0.0, 0.0, 1.0);
 const float radius = 0.05;
 float ratio = resolution.x / resolution.y;
 
@@ -112,22 +109,6 @@ vec3 calculate_normal(in vec3 p)
     return normalize(n);
 }
 
-
-float softshadow( in vec3 ro, in vec3 rd, float mint, float maxt, float k )
-{
-    float res = 1.0;
-    float t = mint;
-    for( int i=0; i<256 && t<maxt; i++ )
-    {
-        float h = map(ro + rd*t);
-        if( h<0.001 )
-            return 0.0;
-        res = min( res, k*h/t );
-        t += h;
-    }
-    return res;
-}
-
 void main() {
     vec2 uv = (gl_FragCoord.xy * 2. - resolution.xy) / resolution.y;
 
@@ -138,7 +119,7 @@ void main() {
     float travelled_distance = 0.;
     float diffuse_intensity = 1.;
     vec3 position = vec3(1.);
-    for (int i = 0; i < 1024; i++) {
+    for (int i = 0; i < 100; i++) {
         position = ray_origin + ray_direction * travelled_distance;
 
         float dist = map(position);
@@ -147,13 +128,11 @@ void main() {
 
         if (dist < .001)
         {
-          // normal = calculate_normal(position) * 0.5 + 0.5;
-          // vec3 light_position = vec3(2., 2.0, 5.0);
-          // vec3 direction_to_light = normalize(position - light_position);
-          // diffuse_intensity = max(0.0, dot(normal, direction_to_light));
+          normal = calculate_normal(position) * 0.5 + 0.5;
+          vec3 light_position = vec3(-10. * cos(time), 2.0 * sin(time), 5.0);
+          vec3 direction_to_light = normalize(position - light_position);
+          diffuse_intensity = max(0.0, dot(normal, direction_to_light));
           // normal = normal * pal( distance, vec3(0.8,0.5,0.4),vec3(0.2,0.4,0.2),vec3(2.0,1.0,1.0),vec3(0.0,0.25,0.25) );
-          // float shad = softshadow(position, direction_to_light, 0.01, 3, 2.);
-          // diffuse_intensity = 0.5 * diffuse_intensity + 0.5 * shad;
           color = pal( exp(distance(position, vec3(0.0))) + sin(time / 100) , vec3(0.42,0.42,0.42),vec3(0.5,0.5,0.5),vec3(.0,.6,1.0),vec3(0.0,0.33,0.67) );
           break;
         }
@@ -163,7 +142,7 @@ void main() {
           break;
         }
     }
-    
-    // color = vec3(normal) * diffuse_intensity * vec3(0.5,0.5,0.7);           // color based on distance
+    color = 0.1 * color + 0.8 *  diffuse_intensity * color;
+           // color based on distance
     FragColor = vec4(color, 1);
 }

@@ -48,7 +48,7 @@ void display(GLFWwindow* window)
 
 void create_scene()
 {        
-    ourShader = new Shader("srcs/ArcticFeather/shaders/vertex.glsl", "srcs/ArcticFeather/shaders/fractal.glsl");
+    ourShader = new Shader("srcs/ArcticFeather/shaders/vertex.glsl", "srcs/ArcticFeather/shaders/n_mandelbrot.glsl");
     (*ourShader).use();
     
     float vertic1[] = {
