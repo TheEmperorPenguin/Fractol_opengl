@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-03-04 17:30:29                                       *
+* @lastModifiedTime: 2024-03-16 16:33:28                                       *
 *******************************************************************************/
 
 #version 330 core
@@ -20,7 +20,8 @@ uniform vec2  resolution;
 
 float ratio = resolution.x / resolution.y;
 
-#define ITER 1000
+
+#define ITER 4242
 
 
 #define cx_mul(a, b) vec2(a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x)
@@ -38,8 +39,11 @@ vec2 squareImaginary(vec2 number){
 	);
 }
 
-vec2 GiveReflection(vec2 C) {
-    
+vec2 GiveReflection(vec2 C)
+{
+    float c2 = dot(C, C);
+    if( 256.0*c2*c2 - 96.0*c2 + 32.0*C.x - 3.0 < 0.0 ) return vec2(0.0);
+    if( 16.0*(c2+2.0*C.x+1.0) - 1.0 < 0.0 ) return vec2(0.0);
     vec2 Z = vec2(0.0); // initial value for iteration Z0
     vec2 dC = vec2(0.0); // derivative with respect to c 
     float reflection = 0; // inside 
@@ -67,12 +71,20 @@ vec2 GiveReflection(vec2 C) {
     return vec2(reflection, 0);
 }
 
-#define AA 2
+float customLerp(float t) {
+  // Apply exponential function to control growth
+  float growthFactor = 1; // Adjust to control how quickly it grows initially
+  float adjustedT = 1 - exp(-growthFactor * t);
+
+  // Linear interpolation between 0 and 1
+  return 1 - adjustedT;
+}
+
 
 void main()
 {
     vec2 l = vec2(0);
-    vec3 col = vec3(0.0);
+    vec4 col = vec4(0.0);
     #ifdef AA
         for( int m=0; m<AA; m++ )
         for( int n=0; n<AA; n++ )
@@ -80,18 +92,17 @@ void main()
             vec2 p = vec2(ourPosition.x * ratio * zoom + x_pos, ourPosition.y * zoom + y_pos)+zoom * (vec2(float(m),float(n))/float(AA) / resolution.x);
             l = GiveReflection(p.xy);
             // col += l.x * pal(l.y * 50, vec3(0.42,0.42,0.42),vec3(0.5,0.5,0.5),vec3(.0,.6,1.0),vec3(0.0,0.33,0.67) );
-            col+= l.x;
+            col+= vec4(l.x * pal(customLerp(l.y * 100), vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(2.0,1.0,0.0),vec3(0.5,0.20,0.25) ), 1.0);
         } 
-        col /= float(AA*AA);
-        FragColor = vec4(col, 1.0 );
+        col /= float(AA*AA); 
+        FragColor = vec4(col);
         if (l.y == 0.0f)
-            FragColor = vec4 (0.,0,0.,0);
+            FragColor = vec4(pal(customLerp((l.y)* 100), vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(2.0,1.0,0.0),vec3(0.5,0.20,0.25) ), 1.0);
     #else
         vec2 p = vec2(ourPosition.x * ratio * zoom + x_pos, ourPosition.y * zoom + y_pos);
         l = GiveReflection(p.xy);
-        FragColor = vec4(pal(l.y, vec3(0.42,0.42,0.42),vec3(0.5,0.5,0.5),vec3(.0,.6,1.0),vec3(0.0,0.33,0.67) ), 1.0);
-        FragColor = vec4(FragColor.xyz * l.x, 1.0 );
+        FragColor = vec4(l.x * pal(customLerp(l.y * 100), vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(2.0,1.0,0.0),vec3(0.5,0.20,0.25) ), 1.0);
         if (l.y == 0.0f)
-            FragColor = vec4 (0.,0,0.5,0);
+            FragColor = vec4(pal(customLerp((l.y)* 100), vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(2.0,1.0,0.0),vec3(0.5,0.20,0.25) ), 1.0);
     #endif
 }

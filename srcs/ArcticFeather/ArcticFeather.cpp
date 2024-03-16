@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-03-04 18:45:18                                       *
+* @lastModifiedTime: 2024-03-16 16:31:55                                       *
 *******************************************************************************/
 
 #include "ArcticFeather.hpp"
@@ -77,6 +77,7 @@ int AF_init(int             window_width,
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     glfwSetErrorCallback(error_callback);
+    glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
     window = glfwCreateWindow(window_height, window_width, window_title, NULL, NULL);
     if (!window)
     {
@@ -88,12 +89,6 @@ int AF_init(int             window_width,
     gladLoadGL(); 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSwapInterval(1); //vsync if 1
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
 
     if (scene_init)
         scene_init();
@@ -122,21 +117,11 @@ int AF_init(int             window_width,
         glfwPollEvents();
 
 
-        // feed inputs to dear imgui, start new frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
 
         if (display)
             display(window);
-        // render your GUI
-        ImGui::Begin("Demo window");
-        ImGui::Button("Hello!");
-        ImGui::End();
 
-        // Render dear imgui into screen
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 
         
 
@@ -153,9 +138,6 @@ int AF_init(int             window_width,
 
 int AF_destroy()
 {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext(); 
     glfwDestroyWindow(window);
     glfwTerminate();
     return (0);
