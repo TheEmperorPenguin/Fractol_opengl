@@ -6,8 +6,7 @@ GLAD		=	./includes/include/glad
 
 SRC_DIR		=	./srcs
 SRC			=	main.cpp							\
-				ArcticFeather/ArcticFeather.cpp		\
-				ArcticFeather/Shader.cpp			\
+				
 
 OBJ			=	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(SRC))))
 
@@ -19,7 +18,7 @@ OBJ			+=	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(notdir $(SRC_LIB)
 
 CC			=	clang++
 
-CFLAGS		=	-g -std=c++11 -I$(IMGUI_DIR) -I$(INCLUDES) -I$(GLAD) -I$(IMGUI_DIR)/backends -Wall -Wextra -Werror
+CFLAGS		=	-g -std=c++17 -I$(IMGUI_DIR) -I$(INCLUDES) -I$(GLAD) -I$(IMGUI_DIR)/backends -Wall -Wextra -Werror
 
 LIBS 		=	-lglut
 
@@ -31,9 +30,13 @@ else
     LIBS += -lglfw -lGL -ldl
 endif
 
-all: $(OBJ_DIR) glad.o $(NAME) 
+all: $(OBJ_DIR) glad.o $(NAME)
 	clear
 	@make header --no-print-directory
+
+submodules:
+	git submodule init
+	git submodule update
 
 $(OBJ_DIR):
 	@if [ ! -d "$(OBJ_DIR)" ]; then mkdir $(OBJ_DIR); fi
@@ -43,7 +46,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) glad.o $(LIBS)
 
 glad.o: $(INCLUDES)/src/glad.c
-	clang -I$(INCLUDES)/include $(INCLUDES)/src/glad.c -c -o obj/glad.o 
+	clang -I$(INCLUDES)/include $(INCLUDES)/src/glad.c -c -o glad.o 
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(CC) -c $(CFLAGS) -o $@ $<
@@ -63,7 +66,9 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME)
+	@printf "Arguments: "
+	@read ARGS; \
+	./$(NAME) $$ARGS
 
 commit:
 	@make fclean --no-print-directory
@@ -82,6 +87,10 @@ work:
 	@code .
 	@make
 
+test:
+	clang++ -D TESTING $(CFLAGS) ./tests/CI_Matrix.cpp -o CI_Matrix
+	./CI_Matrix
+	rm ./CI_Matrix
 
 .PHONY: all clean fclean re
 -include header.mk

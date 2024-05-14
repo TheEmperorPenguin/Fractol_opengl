@@ -5,7 +5,7 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-03-16 16:30:18                                       *
+* @lastModifiedTime: 2024-02-25 18:46:03                                       *
 *******************************************************************************/
 
 
@@ -14,8 +14,8 @@
 
     #include "ArcticFeather.hpp"
 
-    #define WINDOW_WIDTH  1920
-    #define WINDOW_HEIGHT 1080
+    #define WINDOW_WIDTH  1280
+    #define WINDOW_HEIGHT 720
     #define ASPECT_RATIO  WINDOW_HEIGHT /  WINDOW_WIDTH
     
 #endif

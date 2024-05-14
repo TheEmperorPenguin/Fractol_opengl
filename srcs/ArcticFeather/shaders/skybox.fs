@@ -5,20 +5,17 @@
 * @date:      1970-01-01 01:00:00                      ██▀█ █ █▄▀▄█ █ █▀██     *
 *                                                     ▀▀█▄▄█▀ ▀███▀ ▀█▄▄█▀▀    *
 * @lastModifiedBy:   Gabriel TOUZALIN                                          *
-* @lastModifiedTime: 2024-03-12 13:05:24                                       *
+* @lastModifiedTime: 2024-03-12 11:55:56                                       *
 *******************************************************************************/
 
 #version 330 core
+out vec4 FragColor;
 
-layout (location = 0) in vec3 aPos;
+in vec3 TexCoords;
 
-out vec3 ourPosition;
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform samplerCube skybox;
 
 void main()
-{
-   gl_Position = projection * view * model * vec4(aPos, 1.0);
-   ourPosition = vec3(model * vec4(aPos, 1.0));
+{    
+    FragColor = texture(skybox, TexCoords);
 }
